@@ -9,7 +9,7 @@ import courseRoutes from './routes/course.routes.js';
 import cookieParser from "cookie-parser";
 import paymentRoutes from './routes/payment.routes.js';
 import miscellaneousRoutes from './routes/miscellaneous.routes.js';
-
+import rateLimit from 'express-rate-limit';
 
 const app=express();
 
@@ -17,7 +17,12 @@ const app=express();
 
 app.use(express.json()); 
 app.use(express.urlencoded({extended:true}));
-
+app.use(
+  rateLimit({
+    windowMs: 10 * 60 * 1000,
+    max: 40,
+  })
+);
 
 app.use(cookieParser());
 
